@@ -104,5 +104,3 @@ def retrieving_tweets_polarity(symbol, num_of_tweets):
         print("##############################################################################")
         tw_pol="Overall Negative"
     return plt
-
-retrieving_tweets_polarity("TSLA", 10)

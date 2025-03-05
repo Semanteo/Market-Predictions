@@ -11,7 +11,7 @@ from pandas_datareader.data import DataReader
 import yfinance as yf
 from pandas_datareader import data as pdr
 
-yf.pdr_override()
+
 
 # For time stamps
 from datetime import datetime
@@ -24,7 +24,7 @@ end = datetime.now()
 start = datetime(end.year - 1, end.month, end.day)
 
 for stock in tech_list:
-    globals()[stock] = yf.download(stock, start, end)
+    globals()[stock] = yf.Ticker(stock).history(start=start, end=end)
     
 
 company_list = [AAPL, GOOG, MSFT, AMZN]
@@ -42,8 +42,8 @@ plt.subplots_adjust(top=1.25, bottom=1.2)
 
 for i, company in enumerate(company_list, 1):
     plt.subplot(2, 2, i)
-    company['Adj Close'].plot()
-    plt.ylabel('Adj Close')
+    company['Close'].plot()
+    plt.ylabel('Close')
     plt.xlabel(None)
     plt.title(f"Closing Price of {tech_list[i - 1]}")
     
@@ -55,23 +55,23 @@ ma_day = [20, 50, 100]
 for ma in ma_day:
     for company in company_list:
         column_name = f"MA for {ma} days"
-        company[column_name] = company['Adj Close'].rolling(ma).mean()
+        company[column_name] = company['Close'].rolling(ma).mean()
         
 
 fig, axes = plt.subplots(nrows=2, ncols=2)
 fig.set_figheight(10)
 fig.set_figwidth(15)
 
-AAPL[['Adj Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[0,0])
+AAPL[['Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[0,0])
 axes[0,0].set_title('APPLE')
 
-GOOG[['Adj Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[0,1])
+GOOG[['Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[0,1])
 axes[0,1].set_title('GOOGLE')
 
-MSFT[['Adj Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[1,0])
+MSFT[['Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[1,0])
 axes[1,0].set_title('MICROSOFT')
 
-AMZN[['Adj Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[1,1])
+AMZN[['Close', 'MA for 20 days', 'MA for 50 days', 'MA for 100 days']].plot(ax=axes[1,1])
 axes[1,1].set_title('AMAZON')
 
 fig.tight_layout()
@@ -81,7 +81,7 @@ fig.tight_layout()
 
 # We'll use pct_change to find the percent change for each day
 for company in company_list:
-    company['Daily Return'] = company['Adj Close'].pct_change()
+    company['Daily Return'] = company['Close'].pct_change()
 
 # Then we'll plot the daily return percentage
 fig, axes = plt.subplots(nrows=2, ncols=2)
@@ -105,7 +105,7 @@ fig.tight_layout()
 
 # Grab all the closing prices for the tech stock list into one DataFrame
 
-closing_df = pdr.get_data_yahoo(tech_list, start=start, end=end)['Adj Close']
+closing_df = pdr.get_data_yahoo(tech_list, start=start, end=end)['Close']
 
 # Make a new tech returns DataFrame
 tech_rets = closing_df.pct_change()

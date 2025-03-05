@@ -10,13 +10,13 @@ import mplcursors
 
 
 #VARIABLES
-time_period = 300
-predictions_time = 20
-ticker = "PEPE24478-USD"
-pru = 0.000023
-crypto = "Y"
+#time_period = 300
+#predictions_time = 20
+#ticker = "PEPE24478-USD"
+#pru = 0.000023
+#crypto = "Y"
 
-def pred_sarimax(time_period, predictions_time, ticker, pru):
+def pred_sarimax(time_period, predictions_time, ticker, pru, crypto):
    tick_space = round(time_period/20)
    today = date.today()
 
@@ -31,7 +31,7 @@ def pred_sarimax(time_period, predictions_time, ticker, pru):
                         end=end_date, 
                         progress=False)
    data["Date"] = data.index
-   data = data[["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]]
+   data = data[["Date", "Open", "High", "Low", "Close", "Volume"]]
    data.reset_index(drop=True, inplace=True)
    print(data.tail())
 
@@ -125,5 +125,3 @@ def pred_sarimax(time_period, predictions_time, ticker, pru):
    #plt.savefig(f"{path}\{ticker}_predictions_{time_period}_{predictions_time}.pdata["Close"]", bbox_inches='tight')
    
    return plt
-
-pred_sarimax(time_period, predictions_time, ticker, pru)

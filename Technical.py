@@ -16,19 +16,21 @@ import mpld3
 
 
 #VARIABLES
-crypto = input("Crypto ? : [Y/N]")
-time_period = int(input("Time period : "))
-ticker = input("Ticker : ")
-if crypto == "Y":
-   currency = "CRYPTO"
-   frequency = "D"
-else : 
-   currency = yf.Ticker(f"{ticker}").info['financialCurrency']
-   frequency = "B"
+#crypto = input("Crypto ? : [Y/N]")
+#time_period = int(input("Time period : "))
+#ticker = input("Ticker : ")
 
-long_name = yf.Ticker(f"{ticker}").info['longName']
-def tech_analysis(time_period, ticker):
+
+
+def tech_analysis(time_period, ticker, crypto):
+   long_name = yf.Ticker(f"{ticker}").info['longName']
    #DIR OF SAVE
+   if crypto == "Y":
+      currency = "CRYPTO"
+      frequency = "D"
+   else : 
+      currency = yf.Ticker(f"{ticker}").info['financialCurrency']
+      frequency = "B"
    path = f"C:\Simsim\!!!!TRADE\CODE\RESULTS PREDICTIONS\{ticker}"
    # Check whether the specified path exists or not
    isExist = os.path.exists(path)
@@ -51,7 +53,7 @@ def tech_analysis(time_period, ticker):
                         end=end_date, 
                         progress=False)
    stock_df["Date"] = stock_df.index
-   stock_df = stock_df[["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]]
+   stock_df = stock_df[["Date", "Open", "High", "Low", "Close", "Volume"]]
    stock_df.reset_index(drop=True, inplace=True)
 
    def get_tech_ind(data):
@@ -163,5 +165,3 @@ def tech_analysis(time_period, ticker):
 
    tech_ind(tech_df)
    return plt
-
-tech_analysis(time_period, ticker).show()
