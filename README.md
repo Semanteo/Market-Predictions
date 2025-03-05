@@ -20,9 +20,12 @@ Télécharger les fichiers et installer les dépendances.
 9) Regarder les résultats dans le dossier "RESULTS PREDICTIONS"
 
 ## Exemple de rendu 
-![alt text](http://url/to/img.png)
-![alt text](http://url/to/img.png)
-![alt text](http://url/to/img.png)
+### Sentiment du marché
+![Sentiment du marché](BEN.PA_predictions_700_50_500_page-0001.jpg)
+### Prédiction du cours dans la période donnée
+![Prédiction du cours dans la période donnée](BEN.PA_predictions_700_50_500_page-0002.jpg)
+### Analyse technique
+![Analyse technique](BEN.PA_predictions_700_50_500_page-0003.jpg)
 
 
 ## Licence
